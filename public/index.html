@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Manager</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
         }
-
         .header {
             background-color: black;
             color: white;
@@ -19,14 +19,12 @@
             font-size: 24px;
             font-weight: bold;
         }
-
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 80vh;
         }
-
         .button-box {
             background-color: white;
             border-radius: 10px;
@@ -34,7 +32,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-
         .button-box button {
             display: block;
             width: 200px;
@@ -46,7 +43,6 @@
             border-radius: 5px;
             background-color: white;
         }
-
         .button-box button:hover {
             background-color: #f1f1f1;
         }
@@ -54,15 +50,87 @@
 </head>
 <body>
     <div class="header">
-        recipe manger
+        Recipe Manager
     </div>
 
     <div class="container">
         <div class="button-box">
-            <button>add recipe</button>
-            <button>view recipe</button>
-            <button>update recipe</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#resourceModal" style="color : black">
+                Add Recipe
+            </button>
+            <button>View Recipe</button>
+            <button>Update Recipe</button>
         </div>
     </div>
+
+    <!-- Modal for adding recipes -->
+    <div class="modal fade" id="resourceModal" tabindex="-1" role="dialog" aria-labelledby="resourceModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resourceModalLabel">Add New Recipe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="recipeName">Recipe Name</label>
+                            <input type="text" class="form-control" id="recipeName" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" placeholder="Enter description">
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredients">Ingredients</label>
+                            <input type="text" class="form-control" id="ingredients" placeholder="Enter ingredients">
+                        </div>
+                        <div class="form-group">
+                            <label for="steps">Steps</label>
+                            <input type="text" class="form-control" id="steps" placeholder="Enter steps">
+                        </div>
+                        <div class="form-group">
+                            <label for="imageUrl">Image Link</label>
+                            <input type="text" class="form-control" id="imageUrl" placeholder="Enter image link">
+                        </div>
+                        <p align="right" id="message" class=""></p>
+                        
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addRecipe()">Add New Recipe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for modal and addRecipe function -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        /*function addRecipe() {
+            // Retrieve the values entered in the form
+            const name = document.getElementById("RecipeName").value;
+            const description = document.getElementById("Description").value;
+            const ingredients = document.getElementById("ingredients").value;
+            const steps = document.getElementById("steps").value;
+            const imageUrl = document.getElementById("imageUrl").value;
+
+            // Display a message or add your recipe handling code here
+            document.getElementById("message").innerText = "Recipe Added Successfully!";
+            
+            // Clear the form fields
+            document.getElementById("RecipeName").value = '';
+            document.getElementById("Description").value = '';
+            document.getElementById("ingredients").value = '';
+            document.getElementById("steps").value = '';
+            document.getElementById("imageUrl").value = '';
+        }*/
+    </script>
+    <script src="js/createRecipe.js"></script>
 </body>
 </html>
