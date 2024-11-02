@@ -26,18 +26,19 @@ app.get('/feedback/:email', async (req, res) => {
     }
 });
 
-// Route to update feedback
+
 app.put('/update-feedback/:email', async (req, res) => {
     const email = req.params.email;
-    const { feedback, rating } = req.body;
+    const { feedback } = req.body; // Remove 'rating'
 
     try {
-        await addOrUpdateFeedback(email, feedback, rating, 'utils/feedback.json');
+        await addOrUpdateFeedback(email, feedback, 'utils/feedback.json');
         res.status(200).json({ message: 'Feedback updated successfully!' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 server = app.listen(PORT, function () {
     const address = server.address();

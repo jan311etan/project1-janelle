@@ -23,8 +23,10 @@ async function writeFeedback(feedbackList, filename) {
     }
 }
 
-// Function to add or update feedback
 async function addOrUpdateFeedback(email, feedbackText, filename) {
+    if (!filename) {
+        throw new Error("Filename is required but was not provided.");
+    }
     const feedbackList = await readFeedback(filename);
     const existingFeedbackIndex = feedbackList.findIndex(fb => fb.email === email);
 
@@ -40,6 +42,7 @@ async function addOrUpdateFeedback(email, feedbackText, filename) {
 
     await writeFeedback(feedbackList, filename);
 }
+
 
 // Function to get feedback by email
 async function getFeedbackByEmail(email, filename) {
