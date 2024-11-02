@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Feedback</title>
+    <script src="js/feedback.js"></script>
+</head>
+<body>
+    <h2>Update Feedback</h2>
+    <form id="feedbackForm">
+        <div>
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" required placeholder="Enter your email" onblur="retrieveFeedback()">
+        </div>
+        <br>
+        <div>
+            <label for="feedback">Feedback:</label>
+            <textarea id="feedback" rows="4" required placeholder="Your feedback will be here..."></textarea>
+        </div>
+        <br>
+        <div>
+            <label for="rating">Rating (out of 10):</label>
+            <select id="rating">
+                <option value="">Select Rating</option>
+                ${[...Array(10).keys()].map(i => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+            </select>
+        </div>
+        <br>
+        <button type="button" onclick="updateFeedback()">Update Feedback</button>
+        <p id="message"></p>
+    </form>
+</body>
+</html>

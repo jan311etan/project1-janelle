@@ -8,8 +8,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/" + startPage);
+// Import feedback utilities
+const { addOrUpdateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+
+// Route to retrieve feedback by email
+app.get('/feedback/:email', async (req, res) => {
+    const email = req.params.email;
+    try {
+        const feedback = await getFeedbackByEmail(email, 'utils/feedback.json');
+        if (feedback) {
+            res.status(200).json(feedback);
+        } else {
+            res.status(404).json({ message: 'No feedback found for this email.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Route to update feedback
+app.put('/update-feedback/:email', async (req, res) => {
+    const email = req.params.email;
+    const { feedback, rating } = req.body;
+
+    try {
+        await addOrUpdateFeedback(email, feedback, rating, 'utils/feedback.json');
+        res.status(200).json({ message: 'Feedback updated successfully!' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 });
 
 server = app.listen(PORT, function () {
