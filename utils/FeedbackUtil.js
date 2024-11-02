@@ -1,4 +1,4 @@
-// utils/feedbackUtil.js
+// utils/FeedbackUtil.js
 const fs = require('fs').promises;
 const { Feedback } = require('../models/feedback');
 
@@ -21,14 +21,14 @@ async function writeFeedback(feedbackList, filename) {
         console.error(err);
         throw err;
     }
-}  // <- Add the missing closing curly brace here
+}
 
 // Function to add or update feedback
-async function addOrUpdateFeedback(email, feedbackText, rating, filename) {
+async function addOrUpdateFeedback(email, feedbackText, filename) {
     const feedbackList = await readFeedback(filename);
     const existingFeedbackIndex = feedbackList.findIndex(fb => fb.email === email);
 
-    const newFeedback = new Feedback(email, feedbackText, rating);
+    const newFeedback = new Feedback(email, feedbackText);
 
     if (existingFeedbackIndex !== -1) {
         // Update existing feedback
@@ -51,4 +51,5 @@ module.exports = {
     addOrUpdateFeedback,
     getFeedbackByEmail
 };
+
 

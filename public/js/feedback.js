@@ -1,10 +1,8 @@
-// Retrieve existing feedback based on email
 function retrieveFeedback() {
     const email = document.getElementById("email").value;
 
     if (!email) {
-        document.getElementById("message").innerHTML = 'Please enter your email.';
-        document.getElementById("message").setAttribute("class", "text-danger");
+        alert('Please enter your email.');
         return;
     }
 
@@ -15,29 +13,25 @@ function retrieveFeedback() {
             const response = JSON.parse(request.responseText);
             if (response) {
                 document.getElementById("feedback").value = response.feedbackText;
-                document.getElementById("rating").value = response.rating;
-                document.getElementById("message").innerHTML = '';
             } else {
-                document.getElementById("message").innerHTML = 'No feedback found for this email.';
-                document.getElementById("message").setAttribute("class", "text-danger");
+                alert('No feedback found for this email.');
             }
         } else {
-            document.getElementById("message").innerHTML = 'Error retrieving feedback.';
-            document.getElementById("message").setAttribute("class", "text-danger");
+            alert('Error retrieving feedback.');
         }
+    };
+    request.onerror = function () {
+        alert('Request failed. Please check your network connection.');
     };
     request.send();
 }
 
-// Update feedback
 function updateFeedback() {
     const email = document.getElementById("email").value;
     const feedback = document.getElementById("feedback").value;
-    const rating = document.getElementById("rating").value;
 
-    if (!feedback || !rating) {
-        document.getElementById("message").innerHTML = 'Feedback and rating are required!';
-        document.getElementById("message").setAttribute("class", "text-danger");
+    if (!feedback) {
+        alert('Feedback is required!');
         return;
     }
 
@@ -48,15 +42,17 @@ function updateFeedback() {
     request.onload = function () {
         if (request.status >= 200 && request.status < 300) {
             const response = JSON.parse(request.responseText);
-            document.getElementById("message").innerHTML = response.message;
-            document.getElementById("message").setAttribute("class", "text-success");
+            alert(response.message);
         } else {
             const response = JSON.parse(request.responseText);
-            document.getElementById("message").innerHTML = response.message;
-            document.getElementById("message").setAttribute("class", "text-danger");
+            alert(response.message);
         }
     };
 
-    request.send(JSON.stringify({ feedback, rating }));
+    request.onerror = function () {
+        alert('Request failed. Please check your network connection.');
+    };
+
+    request.send(JSON.stringify({ feedback }));
 }
 
