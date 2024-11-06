@@ -8,8 +8,12 @@ function addRecipe() {
     jsonData.imageLink = document.getElementById("imageLink").value;
 
     // Validation check for empty fields
-    if (jsonData.recipeName === "" || jsonData.description === "" || jsonData.ingredients === "" || jsonData.steps === "" || jsonData.imageLink === "") {
-        document.getElementById("message").innerHTML = "All fields are required!";
+    //const imageUrlPattern = /*/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg)(?:\?.*)?$*//^data:image\/(?:png|jpg|jpeg|gif|svg);base64,[A-Za-z0-9+/=]+$)/i;
+    const imageUrlPattern = /^(https?:\/\/.*(?:png|jpg|jpeg|gif|svg|tbn).*(?:\?.*)?$|^data:image\/(?:png|jpg|jpeg|gif|svg);base64,[A-Za-z0-9+/=]+$)/i;
+
+
+    if (jsonData.recipeName === "" || jsonData.description === "" || jsonData.ingredients === "" || jsonData.steps === "" || !imageUrlPattern.test(jsonData.imageLink)) {
+        document.getElementById("message").innerHTML = "All fields are required! and a valid image link is needed!";
         document.getElementById("message").setAttribute("class", "text-danger");
         return;
     }
