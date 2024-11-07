@@ -23,25 +23,23 @@ async function writeFeedback(feedbackList, filename) {
     }
 }
 
-async function addOrUpdateFeedback(email, feedbackText, filename) {
+//update feedback function, no add
+async function updateFeedback(email, feedbackText, filename) {
     if (!filename) {
         throw new Error("Filename is required but was not provided.");
     }
     const feedbackList = await readFeedback(filename);
     const existingFeedbackIndex = feedbackList.findIndex(fb => fb.email === email);
 
-    const newFeedback = new Feedback(email, feedbackText);
-
     if (existingFeedbackIndex !== -1) {
         // Update existing feedback
-        feedbackList[existingFeedbackIndex] = newFeedback;
+        feedbackList[existingFeedbackIndex].feedbackText = feedbackText;
+        await writeFeedback(feedbackList, filename);
     } else {
-        // Add new feedback
-        feedbackList.push(newFeedback);
+        throw new Error("Email not found in the database. Unable to update feedback.");
     }
-
-    await writeFeedback(feedbackList, filename);
 }
+
 
 
 // Function to get feedback by email
@@ -51,7 +49,7 @@ async function getFeedbackByEmail(email, filename) {
 }
 
 module.exports = {
-    addOrUpdateFeedback,
+    updateFeedback,
     getFeedbackByEmail
 };
 
