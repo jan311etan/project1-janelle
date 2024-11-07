@@ -1,8 +1,10 @@
 function retrieveFeedback() {
     const email = document.getElementById("email").value;
 
-    if (!email) {
-        alert('Please enter your email.');
+    // Validate email format using regex
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert('Invalid email address');
         return;
     }
 
@@ -13,9 +15,12 @@ function retrieveFeedback() {
             const response = JSON.parse(request.responseText);
             if (response) {
                 document.getElementById("feedback").value = response.feedbackText;
+                document.getElementById("email").readOnly = true; // Make email read-only after retrieving feedback
             } else {
                 alert('No feedback found for this email.');
             }
+        } else if (request.status === 404) {
+            alert('Email is unrecognized. Please enter a valid registered email.');
         } else {
             alert('Error retrieving feedback.');
         }
@@ -26,12 +31,19 @@ function retrieveFeedback() {
     request.send();
 }
 
+
 function updateFeedback() {
     const email = document.getElementById("email").value;
-    const feedback = document.getElementById("feedback").value;
+    const feedbackElement = document.getElementById("feedback");
+    const feedback = feedbackElement.value;
 
     if (!feedback) {
         alert('Feedback is required!');
+        return;
+    }
+
+    if (feedback === feedbackElement.defaultValue) {
+        alert('No changes made');
         return;
     }
 
