@@ -44,7 +44,7 @@ app.post('/create-feedback', async (req, res) => {
 
 
 // Import feedback utilities
-const { addOrUpdateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
@@ -64,15 +64,33 @@ app.get('/feedback/:email', async (req, res) => {
 
 app.put('/update-feedback/:email', async (req, res) => {
     const email = req.params.email;
-    const { feedback } = req.body; // Remove 'rating'
+    const { feedback } = req.body;
+
+    if (!feedback) {
+        res.status(400).json({ message: 'Feedback is required!' });
+        return;
+    }
 
     try {
-        await addOrUpdateFeedback(email, feedback, 'utils/feedback.json');
+        const existingFeedback = await getFeedbackByEmail(email, 'utils/feedback.json');
+
+        if (!existingFeedback) {
+            res.status(404).json({ message: 'No feedback found for the provided email.' });
+            return;
+        }
+
+        if (existingFeedback.feedbackText === feedback) {
+            res.status(400).json({ message: 'No changes made to the feedback.' });
+            return;
+        }
+
+        await updateFeedback(email, feedback, 'utils/feedback.json');
         res.status(200).json({ message: 'Feedback updated successfully!' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 
 server = app.listen(PORT, function () {
