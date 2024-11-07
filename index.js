@@ -27,7 +27,7 @@ app.get('/viewRecipe', async (req, res) => {
 
 
 // Import feedback utilities
-const { addOrUpdateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
