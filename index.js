@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const {addRecipe } = require('./utils/RecipeUtils');
+const { addRecipe } = require('./utils/RecipeUtils');
 app.post('/addRecipe', addRecipe);
 
 app.get('/viewRecipe', async (req, res) => {
@@ -21,6 +21,23 @@ app.get('/viewRecipe', async (req, res) => {
     } catch (error) {
         console.error('Error reading recipe file:', error);
         res.status(500).json({ error: 'Failed to read recipe data' });
+    }
+});
+
+
+const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function
+
+// Route to handle new feedback creation
+app.post('/create-feedback', async (req, res) => {
+    const { email, feedback } = req.body; // Extract email and feedback from the request body
+
+    try {
+        // Call addFeedback to add feedback if it doesn't already exist
+        await addFeedback(email, feedback, 'utils/feedback.json');
+        res.status(201).json({ message: 'Feedback created successfully!' });
+    } catch (error) {
+        // If feedback already exists or there's another error, send a client error response
+        res.status(400).json({ message: error.message });
     }
 });
 

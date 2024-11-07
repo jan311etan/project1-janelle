@@ -23,6 +23,33 @@ async function writeFeedback(feedbackList, filename) {
     }
 }
 
+// Function to add feedback only if no existing feedback is found for the email
+async function addFeedback(email, feedbackText, filename) {
+    if (!filename) {
+        throw new Error("Filename is required but was not provided.");
+    }
+
+    // Retrieve current feedback data from JSON file
+    const feedbackList = await readFeedback(filename);
+
+    // Check if feedback for this email already exists
+    const existingFeedback = feedbackList.find(fb => fb.email === email);
+    if (existingFeedback) {
+        throw new Error("Feedback for this email already exists."); // Return error if feedback exists
+    }
+
+    // Create a new feedback entry
+    const newFeedback = new Feedback(email, feedbackText);
+
+    // Add the new feedback entry to the feedback list
+    feedbackList.push(newFeedback);
+
+    // Write updated feedback list back to JSON file
+    await writeFeedback(feedbackList, filename);
+}
+
+
+async function addOrUpdateFeedback(email, feedbackText, filename) {
 //update feedback function, no add
 async function updateFeedback(email, feedbackText, filename) {
     if (!filename) {
@@ -49,6 +76,9 @@ async function getFeedbackByEmail(email, filename) {
 }
 
 module.exports = {
+    addOrUpdateFeedback, //For update and create
+    getFeedbackByEmail, // For retrieving feedback
+    addFeedback //Only for create
     updateFeedback,
     getFeedbackByEmail
 };
