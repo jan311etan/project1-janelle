@@ -51,17 +51,23 @@
             background-color: #f1f1f1;
         }
     </style>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
 </head>
 <body>
     <div class="header">
-        recipe manger
+        Recipe Manager
     </div>
 
     <div class="container">
         <div class="button-box">
-            <button onclick="window.location.href='createRecipe.html'">Add Recipe</button>
-            <button onclick="window.location.href='viewRecipe.html'">view recipe</button>
-            <button>update recipe</button>
+            <button onclick="navigateTo('add-recipe.html')">Add Recipe</button>
+            <button onclick="navigateTo('view-recipe.html')">Update Recipe</button>
+            <button onclick="navigateTo('update-recipe.html')">Add Feedback</button>
+            <button onclick="navigateTo('updateFeedback.html')">Update Feedback</button>
         </div>
     </div>
 </body>
