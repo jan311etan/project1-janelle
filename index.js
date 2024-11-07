@@ -67,7 +67,7 @@ app.put('/update-feedback/:email', async (req, res) => {
             return;
         }
 
-        await addOrUpdateFeedback(email, feedback, 'utils/feedback.json');
+        await updateFeedback(email, feedback, 'utils/feedback.json');
         res.status(200).json({ message: 'Feedback updated successfully!' });
     } catch (error) {
         res.status(500).json({ message: error.message });
