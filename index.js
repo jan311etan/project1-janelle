@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(express.static("./public"));
 
 const { updateRecipe } = require('./utils/RecipeUtil')
-app.post('/update-recipe', updateRecipe);
+app.put('/update-recipe/:id', updateRecipe);
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/" + startPage);
