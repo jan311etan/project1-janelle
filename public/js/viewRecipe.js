@@ -37,7 +37,7 @@
 
 
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async function () {
     const searchInput = document.querySelector('.search-bar input');
 
     async function fetchAndDisplayRecipes(searchTerm = "") {
