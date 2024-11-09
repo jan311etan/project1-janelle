@@ -15,10 +15,5 @@
     "email": "newuser@example.com",
     "feedbackText": "This application is fantastic!",
     "timestamp": "2024-11-07T12:28:42.903Z"
-  },
-  {
-    "email": "hi",
-    "feedbackText": "hi",
-    "timestamp": "2024-11-09T13:13:00.126Z"
   }
 ]
