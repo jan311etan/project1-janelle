@@ -1,4 +1,3 @@
-// utils/FeedbackUtil.js
 const fs = require('fs').promises;
 const { Feedback } = require('../models/feedback');
 
@@ -69,7 +68,6 @@ async function addOrUpdateFeedback(email, feedbackText, filename) {
 }
 
 
-
 // Function to get feedback by email
 async function getFeedbackByEmail(email, filename) {
     const feedbackList = await readFeedback(filename);
@@ -77,10 +75,8 @@ async function getFeedbackByEmail(email, filename) {
 }
 
 module.exports = {
-    addOrUpdateFeedback, //For update and create
-    getFeedbackByEmail, // For retrieving feedback
-    addFeedback, //Only for create
-    getFeedbackByEmail
+    addOrUpdateFeedback,  // update feedback
+    getFeedbackByEmail,   // Single export for retrieving feedback
+    addFeedback // create feedback
 };
-
 

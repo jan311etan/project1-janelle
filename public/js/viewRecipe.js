@@ -36,10 +36,8 @@
 // // Call viewRecipe on page load
 // viewRecipe();
 
-
-
+// Event listener for search input
 document.addEventListener("DOMContentLoaded", async function () {
-document.addEventListener("DOMContentLoaded", async function() {
     const searchInput = document.querySelector('.search-bar input');
 
     async function fetchAndDisplayRecipes(searchTerm = "") {
@@ -93,8 +91,8 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
-    
-    
+
+
     function displayRecipeDetails(recipe) {
         const recipeDetails = document.getElementById('recipeDetails');
         if (recipeDetails) {
@@ -108,10 +106,10 @@ document.addEventListener("DOMContentLoaded", async function() {
             recipeDetails.style.display = 'block';
         }
     }
-    
 
 
-    window.showDeletePopup = function(recipeId) {
+
+    window.showDeletePopup = function (recipeId) {
         // Hide all other delete popups
         document.querySelectorAll('.delete-popup').forEach(popup => popup.style.display = 'none');
 
@@ -123,7 +121,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     // Function to delete a recipe by ID
-    window.deleteRecipe = async function(id) {
+    window.deleteRecipe = async function (id) {
         try {
             const response = await fetch(`http://localhost:5050/deleteRecipe/${id}`, {
                 method: 'DELETE',
