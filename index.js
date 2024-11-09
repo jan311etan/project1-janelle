@@ -10,19 +10,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const {addRecipe } = require('./utils/RecipeUtils');
+const {addRecipe , viewRecipe, deleteRecipe,} = require('./utils/RecipeUtils');
 app.post('/addRecipe', addRecipe);
+app.get('/viewRecipe', viewRecipe); // View a recipe 
+app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 
-app.get('/viewRecipe', async (req, res) => {
-    try {
-        const data = await fs.readFile('./utils/recipe.json', 'utf8'); // Adjust the path if necessary
-        const recipes = JSON.parse(data);
-        res.json(recipes); // Send the recipes as JSON
-    } catch (error) {
-        console.error('Error reading recipe file:', error);
-        res.status(500).json({ error: 'Failed to read recipe data' });
-    }
-});
+
 
 
 
