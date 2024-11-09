@@ -65,19 +65,18 @@ async function addOrUpdateFeedback(email, feedbackText, filename) {
             throw new Error("Email not found in the database. Unable to update feedback.");
         }
     }
-
-
-
-    // Function to get feedback by email
-    async function getFeedbackByEmail(email, filename) {
-        const feedbackList = await readFeedback(filename);
-        return feedbackList.find(fb => fb.email === email) || null;
-    }
-
-    module.exports = {
-        addOrUpdateFeedback,  // Only if this function is defined elsewhere
-        getFeedbackByEmail,   // Single export for retrieving feedback
-        addFeedback,          // Only for create
-        updateFeedback        // For updating feedback
-    };
 }
+
+
+// Function to get feedback by email
+async function getFeedbackByEmail(email, filename) {
+    const feedbackList = await readFeedback(filename);
+    return feedbackList.find(fb => fb.email === email) || null;
+}
+
+module.exports = {
+    addOrUpdateFeedback,  // Only if this function is defined elsewhere
+    getFeedbackByEmail,   // Single export for retrieving feedback
+    addFeedback
+};
+

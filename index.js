@@ -5,7 +5,6 @@ const PORT = process.env.PORT || 5050;
 const { readFile } = require('fs').promises;
 const fs = require('fs').promises;
 var startPage = "index.html";
-const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
