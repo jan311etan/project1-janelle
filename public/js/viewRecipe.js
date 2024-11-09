@@ -1,3 +1,4 @@
+
 // async function viewRecipe() {
 //     try {
 //         // Fetch the recipes data from the server
@@ -38,6 +39,7 @@
 
 
 document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function() {
     const searchInput = document.querySelector('.search-bar input');
 
     async function fetchAndDisplayRecipes(searchTerm = "") {
@@ -45,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             // Fetch the recipes data from the server
             const response = await fetch('http://localhost:5050/viewRecipe');
             let recipes = await response.json();
-            console.log('Fetched recipes:', recipes);
+            //console.log('Fetched recipes:', recipes);
 
             const recipesContainer = document.getElementById('recipesContainer');
             if (!recipesContainer) {
@@ -75,6 +77,12 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <p><strong>Description:</strong> ${recipe.description}</p>
                     <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
                     <p><strong>Steps:</strong> ${recipe.steps}</p>
+                    <div class="more-options">
+                        <i class="fas fa-ellipsis-v" onclick="showDeletePopup('${recipe.id}')"></i>
+                    </div>
+                    <div class="delete-popup" id="delete-popup-${recipe.id}">
+                        <button onclick="deleteRecipe('${recipe.id}')">Delete Recipe</button>
+                    </div>
                 `;
 
                 // Append the card to the container
@@ -82,6 +90,53 @@ document.addEventListener("DOMContentLoaded", async function () {
             });
         } catch (error) {
             console.error('Error fetching recipes:', error);
+        }
+    }
+
+    
+    
+    function displayRecipeDetails(recipe) {
+        const recipeDetails = document.getElementById('recipeDetails');
+        if (recipeDetails) {
+            recipeDetails.innerHTML = `
+                <h3>${recipe.recipeName}</h3>
+                <p><strong>Description:</strong> ${recipe.description}</p>
+                <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                <p><strong>Steps:</strong> ${recipe.steps}</p>
+                <img src="${recipe.imageLink}" alt="Recipe Image" style="max-width: 100%; height: auto;">
+            `;
+            recipeDetails.style.display = 'block';
+        }
+    }
+    
+
+
+    window.showDeletePopup = function(recipeId) {
+        // Hide all other delete popups
+        document.querySelectorAll('.delete-popup').forEach(popup => popup.style.display = 'none');
+
+        // Show the delete popup for the selected recipe
+        const popup = document.getElementById(`delete-popup-${recipeId}`);
+        if (popup) {
+            popup.style.display = 'block';
+        }
+    }
+
+    // Function to delete a recipe by ID
+    window.deleteRecipe = async function(id) {
+        try {
+            const response = await fetch(`http://localhost:5050/deleteRecipe/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                alert('Recipe deleted successfully');
+                fetchAndDisplayRecipes(); // Refresh the recipe list
+            } else {
+                alert('Failed to delete recipe');
+            }
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
         }
     }
 

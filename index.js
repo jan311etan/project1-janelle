@@ -10,19 +10,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const { addRecipe } = require('./utils/RecipeUtils');
-app.post('/addRecipe', addRecipe);
 
-app.get('/viewRecipe', async (req, res) => {
-    try {
-        const data = await fs.readFile('./utils/recipe.json', 'utf8'); // Adjust the path if necessary
-        const recipes = JSON.parse(data);
-        res.json(recipes); // Send the recipes as JSON
-    } catch (error) {
-        console.error('Error reading recipe file:', error);
-        res.status(500).json({ error: 'Failed to read recipe data' });
-    }
-});
+const {addRecipe , viewRecipe, deleteRecipe,} = require('./utils/RecipeUtils');
+
+app.post('/addRecipe', addRecipe);
+app.get('/viewRecipe', viewRecipe); // View a recipe 
+app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
+
+
 
 const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
 
@@ -51,7 +46,7 @@ app.post('/create-feedback', async (req, res) => {
 
 
 // Import feedback utilities
-const { addOrUpdateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
@@ -71,15 +66,33 @@ app.get('/feedback/:email', async (req, res) => {
 
 app.put('/update-feedback/:email', async (req, res) => {
     const email = req.params.email;
-    const { feedback } = req.body; // Remove 'rating'
+    const { feedback } = req.body;
+
+    if (!feedback) {
+        res.status(400).json({ message: 'Feedback is required!' });
+        return;
+    }
 
     try {
-        await addOrUpdateFeedback(email, feedback, 'utils/feedback.json');
+        const existingFeedback = await getFeedbackByEmail(email, 'utils/feedback.json');
+
+        if (!existingFeedback) {
+            res.status(404).json({ message: 'No feedback found for the provided email.' });
+            return;
+        }
+
+        if (existingFeedback.feedbackText === feedback) {
+            res.status(400).json({ message: 'No changes made to the feedback.' });
+            return;
+        }
+
+        await updateFeedback(email, feedback, 'utils/feedback.json');
         res.status(200).json({ message: 'Feedback updated successfully!' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 
 server = app.listen(PORT, function () {
