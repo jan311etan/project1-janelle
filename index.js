@@ -5,13 +5,15 @@ const PORT = process.env.PORT || 5050;
 const { readFile } = require('fs').promises;
 const fs = require('fs').promises;
 var startPage = "index.html";
+const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
 
-const {addRecipe , viewRecipe, deleteRecipe,} = require('./utils/RecipeUtils');
+const { addRecipe, viewRecipe, deleteRecipe, } = require('./utils/RecipeUtils');
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
@@ -19,7 +21,7 @@ app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 
 
 
-const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
+// const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
 
 app.post('/create-feedback', async (req, res) => {
     const { email, feedback } = req.body;
@@ -45,8 +47,8 @@ app.post('/create-feedback', async (req, res) => {
 
 
 
-// Import feedback utilities
-const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+// // Import feedback utilities
+// const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
