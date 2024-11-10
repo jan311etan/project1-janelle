@@ -64,7 +64,7 @@ async function getFeedbackByEmail(email, filename) {
 }
 
 module.exports = {
-    addOrUpdateFeedback,  // update feedback
+    updateFeedback,  // update feedback
     getFeedbackByEmail,   // Single export for retrieving feedback
     addFeedback // create feedback
 };
