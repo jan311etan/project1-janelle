@@ -21,6 +21,7 @@ async function writeJSON(data, filename) {
     }
 }
 
+// add
 async function addRecipe(req, res) {
     try {
         const recipeName = req.body.recipeName;
@@ -44,6 +45,7 @@ async function addRecipe(req, res) {
     }
 }
 
+// view
 async function viewRecipe(req, res) {
     try {
         const allRecipes = await readJSON('utils/recipe.json');
@@ -51,6 +53,23 @@ async function viewRecipe(req, res) {
     } catch (error) {
         console.error("Error fetching recipes:", error);
         res.status(500).json({ message: "Error fetching recipes" });
+    }
+}
+
+// view by id
+async function viewRecipeById(req, res) {
+    try {
+        const id = req.params.id;
+        const allRecipes = await readJSON('utils/recipe.json');
+        const recipe = allRecipes.find(recipe => recipe.id === id);
+
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+        return res.status(200).json(recipe);
+    } catch (error) {
+        console.error("Error fetching recipe by id:", error);
+        return res.status(500).json({ message: error.message });
     }
 }
 
@@ -84,6 +103,7 @@ async function deleteRecipe(req, res) {
         return res.status(500).json({ message: error.message });
     }
 }
+
 
 // UPDATE RECIPE
 async function updateRecipe(req, res) {
@@ -122,5 +142,6 @@ async function updateRecipe(req, res) {
     }
 
 
-module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, deleteRecipe,updateRecipe };
+module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe, updateRecipe };
+
 

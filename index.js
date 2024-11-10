@@ -3,14 +3,12 @@ var bodyParser = require("body-parser");
 var app = express();
 
 const PORT = process.env.PORT || 5050;
-const { readFile } = require('fs').promises;
-const fs = require('fs').promises;
 var startPage = "index.html";
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
-
 
 
 
@@ -19,17 +17,19 @@ app.get('/', (req, res) => {
 });
 
 
-const {addRecipe , viewRecipe, deleteRecipe, updateRecipe} = require('./utils/RecipeUtils');
+const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe, updateRecipe} = require('./utils/RecipeUtils');
+
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 app.put('/updateRecipe/:id', updateRecipe); // Update a recipe by id
 
+const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+
+app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
 
-
-const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function
 
 // Route to handle new feedback creation
 app.post('/create-feedback', async (req, res) => {
@@ -44,11 +44,6 @@ app.post('/create-feedback', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-
-
-
-// Import feedback utilities
-const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
