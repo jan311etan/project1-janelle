@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
+const { updateFeedback, getFeedbackByEmail, addFeedback } = require('./utils/FeedbackUtil');
 
 
 app.get('/', (req, res) => {
@@ -25,25 +26,28 @@ app.get('/viewRecipe', viewRecipe); // View a recipe
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 app.put('/updateRecipe/:id', updateRecipe); // Update a recipe by id
 
-const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
-
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
-
-
-// Route to handle new feedback creation
 app.post('/create-feedback', async (req, res) => {
-    const { email, feedback } = req.body; // Extract email and feedback from the request body
+    const { email, feedback } = req.body;
 
     try {
-        // Call addFeedback to add feedback if it doesn't already exist
+        // Check if feedback for the email already exists
+        const existingFeedback = await getFeedbackByEmail(email, 'utils/feedback.json');
+
+        if (existingFeedback) {
+            // If feedback exists, respond with a message indicating that feedback already exists
+            return res.status(409).json({ message: 'Feedback already exists. Redirect to update page.' });
+        }
+
+        // If no existing feedback, add the new feedback
         await addFeedback(email, feedback, 'utils/feedback.json');
         res.status(201).json({ message: 'Feedback created successfully!' });
     } catch (error) {
-        // If feedback already exists or there's another error, send a client error response
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
+
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
