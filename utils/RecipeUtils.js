@@ -54,21 +54,6 @@ async function viewRecipe(req, res) {
     }
 }
 
-async function viewRecipeById(req, res) {
-    try {
-        const id = req.params.id;
-        const allRecipes = await readJSON('utils/recipe.json');
-        const recipe = allRecipes.find(recipe => recipe.id === id);
-
-        if (!recipe) {
-            return res.status(404).json({ message: 'Recipe not found' });
-        }
-        return res.status(200).json(recipe);
-    } catch (error) {
-        console.error("Error fetching recipe by id:", error);
-        return res.status(500).json({ message: error.message });
-    }
-}
 
 
 // Function to delete a recipe by id
@@ -100,5 +85,5 @@ async function deleteRecipe(req, res) {
     }
 }
 
-module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe };
+module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, deleteRecipe };
 
