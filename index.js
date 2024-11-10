@@ -6,28 +6,46 @@ const { readFile } = require('fs').promises;
 const fs = require('fs').promises;
 var startPage = "index.html";
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
-const {addRecipe } = require('./utils/RecipeUtils');
-app.post('/addRecipe', addRecipe);
 
-app.get('/viewRecipe', async (req, res) => {
+const { addRecipe, viewRecipe, deleteRecipe, } = require('./utils/RecipeUtils');
+
+app.post('/addRecipe', addRecipe);
+app.get('/viewRecipe', viewRecipe); // View a recipe 
+app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
+
+
+
+// const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
+
+
+const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function
+
+// Route to handle new feedback creation
+app.post('/create-feedback', async (req, res) => {
+    const { email, feedback } = req.body; // Extract email and feedback from the request body
+
     try {
-        const data = await fs.readFile('./utils/recipe.json', 'utf8'); // Adjust the path if necessary
-        const recipes = JSON.parse(data);
-        res.json(recipes); // Send the recipes as JSON
+        // Call addFeedback to add feedback if it doesn't already exist
+        await addFeedback(email, feedback, 'utils/feedback.json');
+        res.status(201).json({ message: 'Feedback created successfully!' });
     } catch (error) {
-        console.error('Error reading recipe file:', error);
-        res.status(500).json({ error: 'Failed to read recipe data' });
+        // If feedback already exists or there's another error, send a client error response
+        res.status(400).json({ message: error.message });
     }
 });
 
 
 
+// // Import feedback utilities
+// const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 // Import feedback utilities
 const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
