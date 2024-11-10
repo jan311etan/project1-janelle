@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
+
 const PORT = process.env.PORT || 5050;
 var startPage = "index.html";
 
@@ -11,12 +12,19 @@ app.use(express.static("./public"));
 
 const { updateFeedback, getFeedbackByEmail, addFeedback } = require('./utils/FeedbackUtil');
 
-const { addRecipe, viewRecipe, viewRecipeById, deleteRecipe, } = require('./utils/RecipeUtils');
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/public/" + startPage);
+});
+
+
+const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe, updateRecipe} = require('./utils/RecipeUtils');
 
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
+app.put('/updateRecipe/:id', updateRecipe); // Update a recipe by id
 
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
