@@ -18,8 +18,6 @@ app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 
-const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
-
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
 app.post('/create-feedback', async (req, res) => {
