@@ -117,7 +117,16 @@
             background-color: white;
         }
 
-
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            border-color: black;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -128,18 +137,17 @@
         <input type="text" placeholder="Search for recipes...">
     </div>
 
-    <!-- Recipe card -->
-     <!--<div class="recipe-card" onclick="viewRecipe()">
-        <div class="recipe-image-placeholder"></div>
-        <div class="recipe-name">Name of Recipe</div>
-        <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
-    </div> -->
-
-    
+        
 
     <div id="recipesContainer">
     <div class="more-options"><i class="fas fa-ellipsis-v"></i></div>
     </div>
+    
+    <div id="recipeDetails" class="recipe-details">
+        <button class="back-button" onclick="showAllRecipes()">←</button>
+        <div id="recipeContent"></div>
+    </div>
+
     <button class="addRecipeButton" onclick="window.location.href='createRecipe.html'">+</button>
 
 
