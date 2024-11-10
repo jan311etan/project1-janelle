@@ -11,12 +11,13 @@ app.use(express.static("./public"));
 
 const { updateFeedback, getFeedbackByEmail, addFeedback } = require('./utils/FeedbackUtil');
 
-const { addRecipe, viewRecipe, viewRecipeById, deleteRecipe, } = require('./utils/RecipeUtils');
+const { addRecipe, viewRecipe, viewRecipeById, deleteRecipe, updateRecipe } = require('./utils/RecipeUtils');
 
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
+
 
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
