@@ -1,4 +1,4 @@
-const Recipe = require('../models/recipe'); 
+const Recipe = require('../models/recipe'); // Corrected import
 const fs = require('fs').promises;
 
 async function readJSON(filename) {
@@ -21,7 +21,6 @@ async function writeJSON(data, filename) {
     }
 }
 
-// add
 async function addRecipe(req, res) {
     try {
         const recipeName = req.body.recipeName;
@@ -45,7 +44,6 @@ async function addRecipe(req, res) {
     }
 }
 
-// view
 async function viewRecipe(req, res) {
     try {
         const allRecipes = await readJSON('utils/recipe.json');
@@ -56,7 +54,7 @@ async function viewRecipe(req, res) {
     }
 }
 
-// view by id
+
 async function viewRecipeById(req, res) {
     try {
         const id = req.params.id;
@@ -104,44 +102,5 @@ async function deleteRecipe(req, res) {
     }
 }
 
-
-// UPDATE RECIPE
-async function updateRecipe(req, res) {
-    const id = String(req.params.id); // Ensure id is treated as a string
-    console.log("Received ID:", id);
-
-    const allRecipes = await readJSON('./utils/recipe.json');
-    console.log("Loaded recipes:", allRecipes);
-
-    let modified = false;
-
-    for (let i = 0; i < allRecipes.length; i++) {
-        const currentRecipe = allRecipes[i];
-        console.log("Checking recipe ID:", currentRecipe.id);
-
-        // Force comparison to be between strings
-        if (String(currentRecipe.id) === id) {
-            // Update only if fields are provided in req.body
-            const { recipeName, description, ingredients, steps, imageLink} = req.body;
-
-            if (recipeName) allRecipes[i].recipeName = recipeName;
-            if (description) allRecipes[i].description = description;
-            if (ingredients) allRecipes[i].ingredients = ingredients;
-            if (steps) allRecipes[i].steps = steps;
-            if (imageLink) allRecipes[i].imageLinkl = imageLink;
-            }
-            modified = true;
-            break; // Exit loop once the recipe is updated
-        }
-    }
-    if (modified) {
-        await writeJSON(allRecipes, './utils/recipe.json');
-        return res.status(200).json({ message: 'Recipe modified successfully!' });
-    } else {
-        return res.status(404).json({ message: 'Recipe not found, unable to modify!' });
-    }
-
-
-module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe, updateRecipe };
-
+module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe };
 

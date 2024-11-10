@@ -1,18 +1,15 @@
 class Recipe {
-    constructor(name = "Untitled Recipe", image = null, cookingTime = 0, servings = 1, instructions = "", ingredients = []) {
-        this.name = name;
-        this.image = image;
-        this.cookingTime = cookingTime;
-        this.servings = servings;
-        this.instructions = instructions;
+    constructor( recipeName, description, ingredients, steps, imageLink ){
+        this.recipeName = recipeName;
+        this.description = description;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.imageLink = imageLink;
 
-        // Ensure ingredients is an array and map over it to provide default values for each ingredient
-        this.ingredients = ingredients.map(ingredient => ({
-            amount: ingredient.amount || 0,
-            units: ingredient.units || "",
-            name: ingredient.name || "Ingredient"
-        }));
+        const timestamp = new Date().getTime();
+        const random = Math.floor(Math.random() * 1000);
+        this.id = timestamp + "" + random.toString().padStart(3, "0");
     }
 }
 
-module.exports = { Recipe };
+module.exports = Recipe;
