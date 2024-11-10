@@ -3,194 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Recipe</title>
+    <title>Recipe Manager - Update Recipe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* Basic styling */
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            padding: 20px;
         }
-
         .header {
             background-color: black;
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             font-size: 24px;
             font-weight: bold;
         }
-
-        .form-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: white;
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
             padding: 20px;
+        }
+        .form-box {
+            background-color: white;
             border-radius: 10px;
+            padding: 40px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            max-width: 600px;
         }
-
-        button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        .form-group label {
+            font-weight: bold;
         }
-
-        button:hover {
-            background-color: #218838;
+        #recipeDisplay {
+            text-align: center;
+            margin-bottom: 20px;
         }
-
-        .back-button {
-            background-color: #007bff;
-            margin-bottom: 15px;
-        }
-
-        .back-button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Image styling */
-        #recipeImage {
-            max-width: 100%;
+        #recipeDisplay img {
+            max-width: 200px;
             border-radius: 10px;
-            margin: 10px 0;
-            display: none; /* Hidden by default */
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="header">Update Recipe</div>
-    
-    <div class="form-container">
-        <button class="back-button" onclick="window.location.href='index.html'">Back</button>
-        <form id="updateRecipeForm" onsubmit="updateRecipe(); return false;">
-            <div class="form-group">
-                <label for="recipeId">Recipe ID</label>
-                <input type="text" id="recipeId" placeholder="Enter Recipe ID" required onblur="loadRecipe()">
+
+    <!-- Header Section -->
+    <div class="header">Recipe Manager - Update Recipe</div>
+
+    <!-- Main Content Section with Form for Updating Recipe -->
+    <div class="container">
+        <div class="form-box">
+            <button class="btn btn-secondary mb-4" onclick="history.back()">← Back</button>
+            <h5 class="text-center mb-4">Update Recipe</h5>
+
+            <!-- Recipe Display Section -->
+            <div id="recipeDisplay">
+                <p><strong>Recipe ID:</strong> <span id="displayRecipeId"></span></p>
+                <p><strong>Recipe Name:</strong> <span id="displayRecipeName"></span></p>
+                <img id="displayRecipeImage" alt="Recipe Image" style="display: none;">
             </div>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" placeholder="Enter Recipe Name">
-            </div>
-            <div class="form-group">
-                <label for="image">Image URL</label>
-                <input type="text" id="image" placeholder="Enter Image URL" oninput="displayImage()">
-                <img id="recipeImage" alt="Recipe Image">
-            </div>
-            <div class="form-group">
-                <label for="cookingTime">Cooking Time (minutes)</label>
-                <input type="number" id="cookingTime" placeholder="Enter Cooking Time">
-            </div>
-            <div class="form-group">
-                <label for="servings">Servings</label>
-                <input type="number" id="servings" placeholder="Enter Servings" min="1" required>
-            </div>
-            <div class="form-group">
-                <label for="instructions">Instructions</label>
-                <textarea id="instructions" rows="4" placeholder="Enter Instructions"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="ingredients">Ingredients (comma-separated)</label>
-                <textarea id="ingredients" rows="4" placeholder="Enter Ingredients"></textarea>
-            </div>
-            <button type="submit">Update Recipe</button>
-        </form>
+
+            <form id="updateRecipeForm" onsubmit="updateRecipe(); return false;">
+                <div class="form-group">
+                    <label for="recipeId">Select Recipe ID</label>
+                    <select class="form-control" id="recipeId" onchange="loadRecipe(this.value)">
+                        <option selected disabled>Select a Recipe ID</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Recipe Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter Recipe Name">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="2" placeholder="Enter Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients</label>
+                    <textarea class="form-control" id="ingredients" rows="2" placeholder="Enter ingredients, separated by commas"></textarea>
+                    <small class="form-text text-muted">Separate each ingredient by a comma.</small>
+                </div>
+                <div class="form-group">
+                    <label for="steps">Steps</label>
+                    <textarea class="form-control" id="steps" rows="4" placeholder="Enter Steps"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image URL</label>
+                    <input type="text" class="form-control" id="image" placeholder="Enter Image URL" oninput="displayImage()">
+                    <img id="recipeImage" alt="Recipe Image" class="img-fluid mt-2" style="display: none; border-radius: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update Recipe</button>
+                <p class="text-success mt-3" id="message"></p>
+            </form>
+        </div>
     </div>
 
+    <!-- JavaScript and Bootstrap Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
-        // Function to load recipe data by ID when the user exits the Recipe ID field
-        async function loadRecipe() {
-            const recipeId = document.getElementById("recipeId").value.trim();
-            if (!recipeId) return; // Do nothing if the ID field is empty
-
-            const response = await fetch(`http://localhost:5050/recipes/${recipeId}`);
-            if (response.ok) {
-                const recipe = await response.json();
-
-                // Populate the form fields with the recipe data
-                document.getElementById("name").value = recipe.name || "";
-                document.getElementById("image").value = recipe.image || "";
-                document.getElementById("cookingTime").value = recipe.cookingTime || "";
-                document.getElementById("servings").value = recipe.servings || "";
-                document.getElementById("instructions").value = recipe.instructions || "";
-
-                // Format ingredients as comma-separated
-                const ingredientsText = recipe.ingredients.map(ingredient => 
-                    `${ingredient.amount} ${ingredient.units} ${ingredient.name}`
-                ).join(', ');
-                
-                document.getElementById("ingredients").value = ingredientsText;
-
-                // Display the image
-                displayImage();
-            } else {
-                alert("Recipe not found!");
+        // Function to fetch and display recipes in dropdown
+        async function fetchRecipeData() {
+            try {
+                const response = await fetch('utils/recipe.json'); // Corrected path
+                if (response.ok) {
+                    const recipes = await response.json();
+                    populateRecipeDropdown(recipes);
+                } else {
+                    console.error("Failed to load recipes, status:", response.status);
+                    alert("Failed to load recipes.");
+                }
+            } catch (error) {
+                console.error("Error fetching recipes:", error);
+                alert("An error occurred while loading recipes.");
             }
         }
 
-        // Function to display the image preview based on the Image URL input
+        // Function to populate dropdown
+        function populateRecipeDropdown(recipes) {
+            const dropdown = document.getElementById("recipeId");
+            recipes.forEach(recipe => {
+                const option = document.createElement("option");
+                option.value = recipe.id;
+                option.textContent = recipe.id;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Load recipe data on dropdown change
+        async function loadRecipe(recipeId) {
+            try {
+                const response = await fetch('utils/recipe.json');
+                if (response.ok) {
+                    const recipes = await response.json();
+                    const recipe = recipes.find(r => r.id === recipeId);
+                    if (recipe) {
+                        displayRecipeDetails(recipe);
+                    } else {
+                        alert("Recipe not found!");
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading recipe:", error);
+            }
+        }
+
+        // Display selected recipe details in form fields
+        function displayRecipeDetails(recipe) {
+            document.getElementById("displayRecipeId").textContent = recipe.id;
+            document.getElementById("displayRecipeName").textContent = recipe.recipeName;
+            document.getElementById("name").value = recipe.recipeName;
+            document.getElementById("description").value = recipe.description;
+            document.getElementById("ingredients").value = recipe.ingredients.join(', ');
+            document.getElementById("steps").value = recipe.steps;
+            document.getElementById("image").value = recipe.imageLink;
+            displayImage();
+        }
+
         function displayImage() {
             const imageUrl = document.getElementById("image").value;
             const recipeImage = document.getElementById("recipeImage");
-
             if (imageUrl) {
                 recipeImage.src = imageUrl;
-                recipeImage.style.display = "block"; // Show image if URL is provided
+                recipeImage.style.display = "block";
             } else {
-                recipeImage.style.display = "none"; // Hide image if URL is empty
+                recipeImage.style.display = "none";
             }
         }
 
-        // Function to update the recipe
         async function updateRecipe() {
-            const recipeId = document.getElementById("recipeId").value.trim();
-            const name = document.getElementById("name").value;
-            const image = document.getElementById("image").value;
-            const cookingTime = document.getElementById("cookingTime").value;
-            const servings = document.getElementById("servings").value;
-            const instructions = document.getElementById("instructions").value;
-            const ingredients = document.getElementById("ingredients").value
-                .split(',')
-                .map(ingredient => {
-                    const [amount, units, ...nameParts] = ingredient.trim().split(" ");
-                    return { amount: parseFloat(amount), units, name: nameParts.join(" ") };
+            const recipeId = document.getElementById("recipeId").value;
+            const updatedRecipe = {
+                recipeName: document.getElementById("name").value,
+                description: document.getElementById("description").value,
+                ingredients: document.getElementById("ingredients").value.split(','),
+                steps: document.getElementById("steps").value,
+                imageLink: document.getElementById("image").value
+            };
+            try {
+                const response = await fetch(`http://localhost:5050/recipes/${recipeId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedRecipe)
                 });
-
-            // Validation for positive integer servings
-            if (servings <= 0 || !Number.isInteger(Number(servings))) {
-                alert("Servings must be a positive integer.");
-                return;
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                console.error("Error updating recipe:", error);
+                alert("Failed to update recipe.");
             }
-
-            const response = await fetch(`http://localhost:5050/recipes/${recipeId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, image, cookingTime, servings, instructions, ingredients })
-            });
-
-            const result = await response.json();
-            alert(result.message);
         }
+
+        document.addEventListener("DOMContentLoaded", fetchRecipeData);
     </script>
 </body>
 </html>
