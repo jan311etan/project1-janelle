@@ -1,7 +1,7 @@
 [
   {
     "email": "test@example.com",
-    "feedbackText": "konichiwa",
+    "feedbackText": "hello",
     "timestamp": "2024-11-07T10:25:05.787Z"
   },
   {
@@ -18,10 +18,5 @@
     "email": "hi",
     "feedbackText": "hi",
     "timestamp": "2024-11-09T18:23:17.398Z"
-  },
-  {
-    "email": "wer",
-    "feedbackText": "sdf",
-    "timestamp": "2024-11-10T15:44:39.889Z"
   }
 ]
