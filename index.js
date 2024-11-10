@@ -23,12 +23,17 @@ app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 app.post('/create-feedback', async (req, res) => {
     const { email, feedback } = req.body;
 
+    // Email format validation on the server
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format.' });
+    }
+
     try {
         // Check if feedback for the email already exists
         const existingFeedback = await getFeedbackByEmail(email, 'utils/feedback.json');
 
         if (existingFeedback) {
-            // If feedback exists, respond with a message indicating that feedback already exists
             return res.status(409).json({ message: 'Feedback already exists. Redirect to update page.' });
         }
 
@@ -39,6 +44,7 @@ app.post('/create-feedback', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 
 // Route to retrieve feedback by email
