@@ -2,22 +2,25 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
 const PORT = process.env.PORT || 5050;
-const { readFile } = require('fs').promises;
-const fs = require('fs').promises;
 var startPage = "index.html";
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("./public"));
 
 
+
 const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe,} = require('./utils/RecipeUtils');
+
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
+
+// const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
 
 
 const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function
@@ -38,8 +41,11 @@ app.post('/create-feedback', async (req, res) => {
 
 
 
+// // Import feedback utilities
+// const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
 // Import feedback utilities
 const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
