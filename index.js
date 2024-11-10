@@ -2,8 +2,6 @@ var express = require('express');
 var bodyParser = require("body-parser");
 var app = express();
 const PORT = process.env.PORT || 5050;
-const { readFile } = require('fs').promises;
-const fs = require('fs').promises;
 var startPage = "index.html";
 
 
@@ -12,13 +10,18 @@ app.use(bodyParser.json());
 app.use(express.static("./public"));
 
 
-const { addRecipe, viewRecipe, deleteRecipe, } = require('./utils/RecipeUtils');
+
+const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe,} = require('./utils/RecipeUtils');
+
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 
 const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+=======
+app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
+
 
 
 // Route to handle new feedback creation
