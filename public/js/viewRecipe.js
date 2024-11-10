@@ -1,50 +1,34 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const searchInput = document.querySelector('.search-bar input');
+    const recipesContainer = document.getElementById('recipesContainer');
+    const recipeDetails = document.getElementById('recipeDetails');
+    const recipeContent = document.getElementById('recipeContent');
 
     async function fetchAndDisplayRecipes(searchTerm = "") {
         try {
-            // Fetch the recipes data from the server
             const response = await fetch('http://localhost:5050/viewRecipe');
             let recipes = await response.json();
-            //console.log('Fetched recipes:', recipes);
-
-            const recipesContainer = document.getElementById('recipesContainer');
-            if (!recipesContainer) {
-                console.error("Error: recipesContainer element not found in the DOM.");
-                return;
-            }
 
             recipesContainer.innerHTML = ''; // Clear container
 
-            // Filter recipes based on the search term
             if (searchTerm) {
                 recipes = recipes.filter(recipe =>
                     recipe.recipeName.toLowerCase().includes(searchTerm.toLowerCase())
                 );
             }
 
-            // Loop through each recipe and create a card
             recipes.forEach(recipe => {
-                // Create a div for the recipe card
                 const recipeCard = document.createElement('div');
                 recipeCard.classList.add('recipe-card');
 
-                // Populate the card with recipe details, including the image
                 recipeCard.innerHTML = `
                     <h3>${recipe.recipeName}</h3>
                     <img src="${recipe.imageLink}" alt="Recipe Image" class="recipe-image">
                     <p><strong>Description:</strong> ${recipe.description}</p>
-                    <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                    <p><strong>Steps:</strong> ${recipe.steps}</p>
-                    <div class="more-options">
-                        <i class="fas fa-ellipsis-v" onclick="showDeletePopup('${recipe.id}')"></i>
-                    </div>
-                    <div class="delete-popup" id="delete-popup-${recipe.id}">
-                        <button onclick="deleteRecipe('${recipe.id}')">Delete Recipe</button>
-                    </div>
+                    <button onclick="fetchRecipeById('${recipe.id}')">View Details</button>
+                    <button onclick="deleteRecipe('${recipe.id}')">Delete Recipe</button>
                 `;
 
-                // Append the card to the container
                 recipesContainer.appendChild(recipeCard);
             });
         } catch (error) {
@@ -52,23 +36,20 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
-    
-    
-    function displayRecipeDetails(recipe) {
-        const recipeDetails = document.getElementById('recipeDetails');
-        if (recipeDetails) {
-            recipeDetails.innerHTML = `
-                <h3>${recipe.recipeName}</h3>
-                <p><strong>Description:</strong> ${recipe.description}</p>
-                <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
-                <p><strong>Steps:</strong> ${recipe.steps}</p>
-                <img src="${recipe.imageLink}" alt="Recipe Image" style="max-width: 100%; height: auto;">
-            `;
-            recipeDetails.style.display = 'block';
+    window.fetchRecipeById = async function(id) {
+        try {
+            const response = await fetch(`http://localhost:5050/viewRecipe/${id}`);
+            if (!response.ok) {
+                alert('Recipe not found');
+                return;
+            }
+
+            const recipe = await response.json();
+            displayRecipeDetails(recipe);
+        } catch (error) {
+            console.error('Error fetching recipe by ID:', error);
         }
     }
-    
-
 
     window.showDeletePopup = function(recipeId) {
         // Hide all other delete popups
@@ -99,6 +80,31 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
+    function displayRecipeDetails(recipe) {
+        // Hide the list view
+        recipesContainer.style.display = 'none';
+        
+        // Populate the recipe details
+        recipeContent.innerHTML = `
+            <h3>${recipe.recipeName}</h3>
+            <p><strong>Description:</strong> ${recipe.description}</p>
+            <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+            <p><strong>Steps:</strong> ${recipe.steps}</p>
+            <img src="${recipe.imageLink}" alt="Recipe Image" style="max-width: 100%; height: auto;">
+        `;
+        
+        // Show the detail view
+        recipeDetails.style.display = 'block';
+    }
+
+    window.showAllRecipes = function() {
+        // Hide the detail view
+        recipeDetails.style.display = 'none';
+
+        // Show the list view
+        recipesContainer.style.display = 'grid';
+    }
+
     // Initial fetch and display
     fetchAndDisplayRecipes();
 
@@ -108,3 +114,4 @@ document.addEventListener("DOMContentLoaded", async function() {
         fetchAndDisplayRecipes(searchTerm);
     });
 });
+
