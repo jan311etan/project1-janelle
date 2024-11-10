@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Feedback</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/feedback.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        .form-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: left;
+        }
+
+        .form-box label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-box input[type="email"],
+        .form-box textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .form-box button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+        }
+
+        .form-box button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Recipe Manager
+    </div>
+
+    <div class="container">
+        <div class="form-box">
+            <h2>Update Feedback</h2>
+            <form id="feedbackForm">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" required placeholder="Enter your email" onblur="retrieveFeedback()">
+
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" rows="4" required placeholder="Your feedback will be here..."></textarea>
+
+                <button type="button" onclick="updateFeedback()">Update Feedback</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
