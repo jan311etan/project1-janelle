@@ -1,4 +1,43 @@
-document.addEventListener("DOMContentLoaded", async function() {
+
+// async function viewRecipe() {
+//     try {
+//         // Fetch the recipes data from the server
+//         const response = await fetch('http://localhost:5050/viewRecipe');
+//         const recipes = await response.json();
+//         console.log('Fetched recipes:', recipes);
+
+//         const recipesContainer = document.getElementById('recipesContainer');
+//         recipesContainer.innerHTML = ''; // Clear container
+
+//         // Loop through each recipe and create a card
+//         recipes.forEach(recipe => {
+//             // Create a div for the recipe card
+//             const recipeCard = document.createElement('div');
+//             recipeCard.classList.add('recipe-card');
+
+//             // Populate the card with recipe details
+//             recipeCard.innerHTML = `
+//                 <h3>${recipe.recipeName}</h3>
+//                 <img src="${recipe.imageLink}" alt="Recipe Image">
+//                 <p><strong>Description:</strong> ${recipe.description}</p>
+//                 <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+//                 <p><strong>Steps:</strong> ${recipe.steps}</p>
+//             `;
+
+//             // Append the card to the container
+//             recipesContainer.appendChild(recipeCard);
+//         });
+
+//     } catch (error) {
+//         console.error('Error fetching recipes:', error);
+//     }
+// }
+
+// // Call viewRecipe on page load
+// viewRecipe();
+
+// Event listener for search input
+document.addEventListener("DOMContentLoaded", async function () {
     const searchInput = document.querySelector('.search-bar input');
     const recipesContainer = document.getElementById('recipesContainer');
     const recipeDetails = document.getElementById('recipeDetails');
@@ -36,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
+
     window.fetchRecipeById = async function(id) {
         try {
             const response = await fetch(`http://localhost:5050/viewRecipe/${id}`);
@@ -51,7 +91,26 @@ document.addEventListener("DOMContentLoaded", async function() {
         }
     }
 
-    window.showDeletePopup = function(recipeId) {
+
+
+    function displayRecipeDetails(recipe) {
+        const recipeDetails = document.getElementById('recipeDetails');
+        if (recipeDetails) {
+            recipeDetails.innerHTML = `
+                <h3>${recipe.recipeName}</h3>
+                <p><strong>Description:</strong> ${recipe.description}</p>
+                <p><strong>Ingredients:</strong> ${recipe.ingredients}</p>
+                <p><strong>Steps:</strong> ${recipe.steps}</p>
+                <img src="${recipe.imageLink}" alt="Recipe Image" style="max-width: 100%; height: auto;">
+            `;
+            recipeDetails.style.display = 'block';
+        }
+    }
+
+
+
+
+    window.showDeletePopup = function (recipeId) {
         // Hide all other delete popups
         document.querySelectorAll('.delete-popup').forEach(popup => popup.style.display = 'none');
 
@@ -63,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     // Function to delete a recipe by ID
-    window.deleteRecipe = async function(id) {
+    window.deleteRecipe = async function (id) {
         try {
             const response = await fetch(`http://localhost:5050/deleteRecipe/${id}`, {
                 method: 'DELETE',
