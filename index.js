@@ -17,13 +17,12 @@ const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe,} = require('./utils
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
+
+const { addFeedback, updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
+=======
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
 
-// const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function as getFeedbackByEmail is already imported
-
-
-const { addFeedback } = require('./utils/FeedbackUtil'); // Import the new addFeedback function
 
 // Route to handle new feedback creation
 app.post('/create-feedback', async (req, res) => {
@@ -38,14 +37,6 @@ app.post('/create-feedback', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-
-
-
-// // Import feedback utilities
-// const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
-// Import feedback utilities
-const { updateFeedback, getFeedbackByEmail } = require('./utils/FeedbackUtil');
-
 
 // Route to retrieve feedback by email
 app.get('/feedback/:email', async (req, res) => {
