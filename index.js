@@ -13,18 +13,22 @@ app.use(express.static("./public"));
 const { updateFeedback, getFeedbackByEmail, addFeedback } = require('./utils/FeedbackUtil');
 
 
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/" + startPage);
 });
 
 
 const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe, updateRecipe} = require('./utils/RecipeUtils');
+const { addRecipe, viewRecipe, viewRecipeById, deleteRecipe, updateRecipe } = require('./utils/RecipeUtils');
+ 
 
 
 app.post('/addRecipe', addRecipe);
 app.get('/viewRecipe', viewRecipe); // View a recipe 
 app.delete('/deleteRecipe/:id', deleteRecipe); // Delete a recipe by id
 app.put('/updateRecipe/:id', updateRecipe); // Update a recipe by id
+
 
 app.get('/viewRecipe/:id', viewRecipeById); // View a recipe by id
 
