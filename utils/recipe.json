@@ -51,7 +51,7 @@
   },
   {
     "recipeName": "helloooo",
-    "description": "testing validation",
+    "description": "testing update function",
     "ingredients": [
       "testing validation"
     ],
