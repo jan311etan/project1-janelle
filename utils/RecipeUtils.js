@@ -1,4 +1,4 @@
-const Recipe = require('../models/recipe'); // Corrected import
+const Recipe = require('../models/Recipe'); // Corrected import
 const fs = require('fs').promises;
  
 async function readJSON(filename) {
