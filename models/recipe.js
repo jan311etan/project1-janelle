@@ -1,5 +1,3 @@
-
-
 class Recipe {
     constructor( recipeName, description, ingredients, steps, imageLink ){
         this.recipeName = recipeName;
