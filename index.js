@@ -20,7 +20,8 @@ app.get('/', (req, res) => {
 });
 
 
-const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe, updateRecipe} = require('./utils/RecipeUtils');
+const {addRecipe , viewRecipe, viewRecipeById, deleteRecipe} = require('./utils/RecipeUtils');
+const {updateRecipe} = require ('./utils/updateRecipeUtils');
 
  
 
