@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const Recipe = require('../models/Recipe'); // Corrected import
-=======
-const Recipe = require('../models/recipe'); // Corrected import
->>>>>>> main
+const Recipe = require('./models/recipe'); // Corrected import
 const fs = require('fs').promises;
  
 async function readJSON(filename) {
@@ -24,11 +20,6 @@ async function writeJSON(data, filename) {
         throw err;
     }
 }
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> main
 async function addRecipe(req, res) {
     try {
         const recipeName = req.body.recipeName;
@@ -51,11 +42,6 @@ async function addRecipe(req, res) {
         return res.status(500).json({ message: error.message });
     }
 }
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> main
 async function viewRecipe(req, res) {
     try {
         const allRecipes = await readJSON('utils/recipe.json');
@@ -65,13 +51,7 @@ async function viewRecipe(req, res) {
         res.status(500).json({ message: "Error fetching recipes" });
     }
 }
-<<<<<<< HEAD
- 
- 
-=======
 
-
->>>>>>> main
 async function viewRecipeById(req, res) {
     try {
         const id = req.params.id;
@@ -119,12 +99,5 @@ async function deleteRecipe(req, res) {
     }
 }
 
-<<<<<<< HEAD
- 
-module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe};
- 
- 
-=======
 module.exports = { readJSON, writeJSON, addRecipe, viewRecipe, viewRecipeById, deleteRecipe };
 
->>>>>>> main
