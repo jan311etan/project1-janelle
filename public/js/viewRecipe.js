@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <p><strong>Description:</strong> ${recipe.description}</p>
                     <button onclick="fetchRecipeById('${recipe.id}')">View Details</button>
                     <button onclick="deleteRecipe('${recipe.id}')">Delete Recipe</button>
+                    <button onclick="goToUpdateRecipe('${recipe.id}')">Update Recipe</button>
                 `;
 
                 recipesContainer.appendChild(recipeCard);
@@ -35,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error('Error fetching recipes:', error);
         }
     }
-
 
     window.fetchRecipeById = async function(id) {
         try {
@@ -52,8 +52,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-
-
     function displayRecipeDetails(recipe) {
         const recipeDetails = document.getElementById('recipeDetails');
         if (recipeDetails) {
@@ -65,20 +63,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 <img src="${recipe.imageLink}" alt="Recipe Image" style="max-width: 100%; height: auto;">
             `;
             recipeDetails.style.display = 'block';
-        }
-    }
-
-
-
-
-    window.showDeletePopup = function (recipeId) {
-        // Hide all other delete popups
-        document.querySelectorAll('.delete-popup').forEach(popup => popup.style.display = 'none');
-
-        // Show the delete popup for the selected recipe
-        const popup = document.getElementById(`delete-popup-${recipeId}`);
-        if (popup) {
-            popup.style.display = 'block';
         }
     }
 
@@ -99,6 +83,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             console.error('Error deleting recipe:', error);
         }
     }
+
+
 
     function displayRecipeDetails(recipe) {
         // Hide the list view
@@ -134,4 +120,3 @@ document.addEventListener("DOMContentLoaded", async function () {
         fetchAndDisplayRecipes(searchTerm);
     });
 });
-
