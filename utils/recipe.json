@@ -1,10 +1,13 @@
 [
   {
-    "recipeName": "salad",
-    "description": "delicious salad",
-    "ingredients": "various lettuces, sauce",
-    "steps": "add lettuce, add sauce, bowl",
-    "imageLink": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSip9aEhqGPmm0Ne1TFRKsBFjIQZS63rQ6t8g&s",
+    "recipeName": "Updated Salad Recipe",
+    "description": "A delicious updated salad recipe",
+    "ingredients": [
+      "Updated lettuce",
+      "Updated sauce"
+    ],
+    "steps": "Mix updated lettuce, add updated sauce, serve in a bowl",
+    "imageLink": "https://example.com/updated-salad-image.jpg",
     "id": "1731281616432197"
   }
 ]
