@@ -1,4 +1,3 @@
-// models/feedback.js
 class Feedback {
     constructor(email, feedbackText, rating) {
         this.email = email;  // Using email as the identifier
