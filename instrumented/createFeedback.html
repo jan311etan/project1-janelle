@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"> <!-- Sets the character encoding to UTF-8 for proper text display -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Ensures responsive design on mobile devices -->
+    <title>Create Feedback</title> <!-- Page title displayed in the browser tab -->
+</head>
+
+<!-- Style applied directly to the body to center content and set background color -->
+
+<body
+    style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: Arial, sans-serif; background-color: #f8f9fa;">
+
+    <!-- Main container for the form box with inline styling for layout and appearance -->
+    <div
+        style="background-color: white; border-radius: 10px; padding: 40px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); width: 400px; text-align: left;">
+
+        <!-- Header for the form, styled to be centered and bold -->
+        <h2 style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Create Feedback</h2>
+
+        <!-- Form for submitting feedback -->
+        <form id="createFeedbackForm">
+
+            <!-- Label for the email field with bold styling and spacing -->
+            <label for="email" style="font-weight: bold; display: block; margin-bottom: 5px;">Email Address:</label>
+
+            <!-- Input field for the email with padding, rounded corners, and border styling -->
+            <input type="email" id="email" required placeholder="Enter your email"
+                style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;">
+
+            <!-- Label for the feedback textarea with bold styling and spacing -->
+            <label for="feedback" style="font-weight: bold; display: block; margin-bottom: 5px;">Feedback:</label>
+
+            <!-- Text area for the feedback text with padding, rounded corners, and border styling -->
+            <textarea id="feedback" rows="4" required placeholder="Your feedback here..."
+                style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;"></textarea>
+
+            <!-- Button to submit the feedback, styled to be prominent with black background and white text -->
+            <button type="button" onclick="submitFeedback()"
+                style="width: 100%; padding: 10px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background-color: black; color: white; font-weight: bold;">
+                Submit Feedback
+            </button>
+
+        </form>
+
+        <!-- Back button to return to the main page, positioned directly under the form -->
+        <button type="button" onclick="goBackToMain()"
+            style="margin-top: 15px; width: 100%; padding: 10px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; background-color: #ccc; color: black; font-weight: bold;">
+            Back to Main
+        </button>
+
+    </div>
+
+    <!-- Link to the JavaScript file that handles form submission functionality -->
+    <script src="js/createFeedback.js"></script>
+    <script>
+        // Function to navigate back to the main page
+        function goBackToMain() {
+            window.location.href = 'index.html'; // Redirects the user to the main page
+        }
+    </script>
+</body>
+
+</html>

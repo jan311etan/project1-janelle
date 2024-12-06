@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager - Update Recipe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+        .form-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        #recipeDisplay {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #recipeDisplay img {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">Recipe Manager - Update Recipe</div>
+
+    <!-- Main Content Section with Form for Updating Recipe -->
+    <div class="container">
+        <div class="form-box">
+            <button class="btn btn-secondary mb-4" onclick="history.back()">← Back</button>
+            <h5 class="text-center mb-4">Update Recipe</h5>
+
+            <!-- Recipe Display Section -->
+            <div id="recipeDisplay">
+                <p><strong>Recipe ID:</strong> <span id="displayRecipeId"></span></p>
+                <p><strong>Recipe Name:</strong> <span id="displayRecipeName"></span></p>
+                <img id="displayRecipeImage" alt="Recipe Image" style="display: none;">
+            </div>
+
+            <form id="updateRecipeForm" onsubmit="updateRecipe(); return false;">
+                <div class="form-group">
+                    <label for="name">Recipe Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter Recipe Name">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" rows="2" placeholder="Enter Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients</label>
+                    <textarea class="form-control" id="ingredients" rows="2" placeholder="Enter ingredients, separated by commas"></textarea>
+                    <small class="form-text text-muted">Separate each ingredient by a comma.</small>
+                </div>
+                <div class="form-group">
+                    <label for="steps">Steps</label>
+                    <textarea class="form-control" id="steps" rows="4" placeholder="Enter Steps"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image URL</label>
+                    <input type="text" class="form-control" id="image" placeholder="Enter Image URL" oninput="displayImage()">
+                    <img id="recipeImage" alt="Recipe Image" class="img-fluid mt-2" style="display: none; border-radius: 10px;">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update Recipe</button>
+                <p class="text-success mt-3" id="message"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript and Bootstrap Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/viewRecipe.js"></script>
+    <script src="js/updateRecipe.js"></script>
+    
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Retrieve the recipe data from sessionStorage
+            const recipeData = JSON.parse(sessionStorage.getItem("selectedRecipe"));
+
+            if (recipeData) {
+                // Populate the form with the existing recipe details
+                document.getElementById("displayRecipeId").textContent = recipeData.id;
+                document.getElementById("displayRecipeName").textContent = recipeData.recipeName;
+                document.getElementById("name").value = recipeData.recipeName;
+                document.getElementById("description").value = recipeData.description;
+
+                // Handle ingredients (ensure it's a string, separated by commas)
+                document.getElementById("ingredients").value = recipeData.ingredients;
+
+                // Handle steps (ensure it's properly populated in the textarea)
+                document.getElementById("steps").value = recipeData.steps;
+
+                // Handle image link
+                document.getElementById("image").value = recipeData.imageLink;
+                displayImage();
+            } else {
+                alert("No recipe data found in sessionStorage.");
+            }
+        });
+
+        function displayImage() {
+            const imageUrl = document.getElementById("image").value;
+            const recipeImage = document.getElementById("recipeImage");
+            if (imageUrl) {
+                recipeImage.src = imageUrl;
+                recipeImage.style.display = "block";
+            } else {
+                recipeImage.style.display = "none";
+            }
+        }
+
+        async function updateRecipe() {
+    const recipeId = document.getElementById("displayRecipeId").textContent;
+
+    // Check if elements exist before accessing their value
+    const recipeName = document.getElementById("name");
+    const description = document.getElementById("description");
+    const ingredients = document.getElementById("ingredients");
+    const steps = document.getElementById("steps");
+    const imageLink = document.getElementById("image");
+
+    // Check if any elements are null
+    if (!recipeName || !description || !ingredients || !steps || !imageLink) {
+        alert("Some form fields are missing.");
+        return;
+    }
+
+    const updatedRecipe = {
+        recipeName: recipeName.value,
+        description: description.value,
+        ingredients: ingredients.value.split(',').map(item => item.trim()), // Trim any extra spaces
+        steps: steps.value,
+        imageLink: imageLink.value
+    };
+
+    if (!updatedRecipe.recipeName || !updatedRecipe.description || !updatedRecipe.ingredients.length || !updatedRecipe.steps || !updatedRecipe.imageLink) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5050/updateRecipe/${recipeId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedRecipe)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            alert(result.message);  // Show a success message if the update was successful
+
+            window.location.href = "viewRecipe.html";
+        } else {
+            // Handle cases where the server did not process the update
+            const errorResult = await response.json();
+            alert(errorResult.message || "Failed to update recipe.");
+        }
+    } catch (error) {
+        console.error("Error updating recipe:", error);
+        alert("Failed to update recipe.");
+    }
+}
+
+
+        
+    </script> 
+</body>
+</html>
