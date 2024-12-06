@@ -1,22 +1,30 @@
-const fs = require('fs').promises;
+const { readFeedback, writeFeedback } = require('./FeedbackUtil');
 const { Feedback } = require('../models/feedback');
-const { readFeedback, writeFeedback } = require('./FeedbackUtil'); // Import shared utility functions
 
-// Function to add feedback only if no existing feedback is found for the email
+
 async function addFeedback(email, feedbackText, filename) {
     if (!filename) {
-        throw new Error("Filename is required but was not provided.");
+        throw new Error('Filename is required but was not provided.');
     }
 
     const feedbackList = await readFeedback(filename);
+
+    // Check if feedback already exists
     const existingFeedback = feedbackList.find(fb => fb.email === email);
     if (existingFeedback) {
-        throw new Error("Feedback for this email already exists.");
+        throw new Error('409: Feedback for this email already exists.');
     }
 
-    const newFeedback = new Feedback(email, feedbackText);
+    // Add new feedback
+    const newFeedback = { email, feedbackText, timestamp: new Date().toISOString() };
     feedbackList.push(newFeedback);
-    await writeFeedback(feedbackList, filename);
+
+    try {
+        await writeFeedback(feedbackList, filename);
+    } catch (error) {
+        console.error('Error writing feedback:', error.message);
+        throw new Error('500: Unable to write feedback to file.');
+    }
 }
 
 module.exports = { addFeedback };

@@ -1,15 +1,11 @@
-const { addFeedback } = require('./CreateFeedbackUtil');
-const { updateFeedback } = require('./UpdateFeedbackUtil');
 const fs = require('fs').promises;
 
-// Shared functions for reading and writing feedback
 async function readFeedback(filename) {
     try {
         const data = await fs.readFile(filename, 'utf8');
         return JSON.parse(data);
     } catch (err) {
-        console.error(err);
-        throw err;
+        throw new Error('Simulated server error');
     }
 }
 
@@ -17,21 +13,17 @@ async function writeFeedback(feedbackList, filename) {
     try {
         await fs.writeFile(filename, JSON.stringify(feedbackList, null, 2), 'utf8');
     } catch (err) {
-        console.error(err);
-        throw err;
+        throw new Error('500: Unable to write feedback to file.');
     }
 }
 
-// Function to get feedback by email
 async function getFeedbackByEmail(email, filename) {
     const feedbackList = await readFeedback(filename);
     return feedbackList.find(fb => fb.email === email) || null;
 }
 
 module.exports = {
-    addFeedback,
-    updateFeedback,
-    getFeedbackByEmail,
-    readFeedback, // Export shared functions for other modules
+    readFeedback,
     writeFeedback,
+    getFeedbackByEmail,
 };
