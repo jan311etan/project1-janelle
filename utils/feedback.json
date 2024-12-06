@@ -23,5 +23,20 @@
     "email": "jan311e.tan@gmail.com",
     "feedbackText": "hi",
     "timestamp": "2024-12-06T06:18:16.968Z"
+  },
+  {
+    "email": "existing@example.com",
+    "feedbackText": "Duplicate feedback",
+    "timestamp": "2024-12-06T08:26:03.611Z"
+  },
+  {
+    "email": "unique-test@example.com",
+    "feedbackText": "This is a test feedback.",
+    "timestamp": "2024-12-06T09:06:27.273Z"
+  },
+  {
+    "email": "hihhihih@gmail.com",
+    "feedbackText": "hhhhhhhhhhhhhhhhhhhhh",
+    "timestamp": "2024-12-06T09:36:00.354Z"
   }
 ]

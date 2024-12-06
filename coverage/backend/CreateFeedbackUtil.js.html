@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">18.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>16/16</span>
+                <span class='fraction'>3/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>3/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -98,27 +98,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -127,28 +127,28 @@
 const { Feedback } = require('../models/feedback');
 &nbsp;
 &nbsp;
-async function addFeedback(email, feedbackText, filename) {
-    if (!filename) {
-        throw new Error('Filename is required but was not provided.');
+async function <span class="fstat-no" title="function not covered" >addFeedback(</span>email, feedbackText, filename) {
+<span class="cstat-no" title="statement not covered" >    if (!filename) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error('Filename is required but was not provided.');</span>
     }
 &nbsp;
-    const feedbackList = await readFeedback(filename);
+    const feedbackList = <span class="cstat-no" title="statement not covered" >await readFeedback(filename);</span>
 &nbsp;
     // Check if feedback already exists
-    const existingFeedback = feedbackList.find(fb =&gt; fb.email === email);
-    if (existingFeedback) {
-        throw new Error('409: Feedback for this email already exists.');
+    const existingFeedback = <span class="cstat-no" title="statement not covered" >feedbackList.find(<span class="fstat-no" title="function not covered" >fb</span> =&gt; <span class="cstat-no" title="statement not covered" >fb.email === email)</span>;</span>
+<span class="cstat-no" title="statement not covered" >    if (existingFeedback) {</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error('409: Feedback for this email already exists.');</span>
     }
 &nbsp;
     // Add new feedback
-    const newFeedback = { email, feedbackText, timestamp: new Date().toISOString() };
-    feedbackList.push(newFeedback);
+    const newFeedback = <span class="cstat-no" title="statement not covered" >{ email, feedbackText, timestamp: new Date().toISOString() };</span>
+<span class="cstat-no" title="statement not covered" >    feedbackList.push(newFeedback);</span>
 &nbsp;
-    try {
-        await writeFeedback(feedbackList, filename);
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >        await writeFeedback(feedbackList, filename);</span>
     } catch (error) {
-        console.error('Error writing feedback:', error.message);
-        throw new Error('500: Unable to write feedback to file.');
+<span class="cstat-no" title="statement not covered" >        console.error('Error writing feedback:', error.message);</span>
+<span class="cstat-no" title="statement not covered" >        throw new Error('500: Unable to write feedback to file.');</span>
     }
 }
 &nbsp;
@@ -160,7 +160,7 @@ module.exports = { addFeedback };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T06:19:20.556Z
+                at 2024-12-06T09:58:54.900Z
             </div>
         <script src="prettify.js"></script>
         <script>
