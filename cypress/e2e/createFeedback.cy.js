@@ -1,23 +1,21 @@
 describe('Create Feedback Functionality', () => {
-  const baseUrl = 'http://localhost:5050/createFeedback.html'; // Base URL for your frontend page
 
-  beforeEach(() => {
-    // Visit the Create Feedback page before each test
-    cy.visit(baseUrl);
+  let baseUrl;
+
+  before(() => {
+    cy.task('startServer').then((url) => {
+      baseUrl = url + "/createFeedback.html"; // Store the base URL
+      cy.visit(baseUrl);
+    });
   });
 
-  // it('should submit feedback successfully', () => {
-  //   // Reset or mock data to ensure no duplicate feedback issue
-  //   cy.get('#email').type('unique-test@example.com'); // Use a unique email for the test
-  //   cy.get('#feedback').type('This is a test feedback.');
-  //   cy.get('button').contains('Submit Feedback').click();
-  //   cy.on('window:alert', (text) => {
-  //     expect(text).to.equal('Feedback submitted successfully!');
-  //   });
-  // });
+  after(() => {
+    return cy.task('stopServer'); // Stop the server after the report is done
+  });
 
   it('should display the feedback form', () => {
-    // Check if the form and inputs are present
+    cy.visit(baseUrl);
+
     cy.get('form#createFeedbackForm').should('exist');
     cy.get('#email').should('exist');
     cy.get('#feedback').should('exist');
@@ -25,7 +23,8 @@ describe('Create Feedback Functionality', () => {
   });
 
   it('should validate empty fields', () => {
-    // Click Submit without filling the form
+    cy.visit(baseUrl);
+
     cy.get('button').contains('Submit Feedback').click();
     cy.on('window:alert', (text) => {
       expect(text).to.equal('Both email and feedback are required.');
@@ -33,7 +32,8 @@ describe('Create Feedback Functionality', () => {
   });
 
   it('should validate invalid email format', () => {
-    // Enter invalid email and valid feedback, then click Submit
+    cy.visit(baseUrl);
+
     cy.get('#email').type('invalid-email');
     cy.get('#feedback').type('Valid feedback');
     cy.get('button').contains('Submit Feedback').click();
@@ -42,19 +42,21 @@ describe('Create Feedback Functionality', () => {
     });
   });
 
-  // it('should handle duplicate feedback gracefully', () => {
-  //   // Use an email that already exists in the mock or database
-  //   cy.get('#email').type('existing@example.com');
-  //   cy.get('#feedback').type('Duplicate feedback');
-  //   cy.get('button').contains('Submit Feedback').click();
-  //   cy.on('window:alert', (text) => {
-  //     expect(text).to.equal('Feedback already exists for this email. Redirecting to update page.');
-  //   });
-  // });
 
+  it('should show email exist', () => {
+    cy.visit(baseUrl);
+
+    cy.get('#email').type('unique-test@example.com');
+    cy.get('#feedback').type('Valid feedback');
+    cy.get('button').contains('Submit Feedback').click();
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('Feedback already exists for this email. Redirecting to update page.');
+    });
+  });
 
   it('should handle server errors gracefully', () => {
-    // Simulate server error during submission
+    cy.visit(baseUrl);
+
     cy.intercept('POST', '/create-feedback', {
       statusCode: 500,
       body: { message: 'Internal Server Error' },

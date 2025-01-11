@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1733479037343" clover="3.2.0">
-  <project timestamp="1733479037344" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1736482029087" clover="3.2.0">
+  <project timestamp="1736482029087" name="All files">
+    <metrics statements="19" coveredstatements="16" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1" elements="28" coveredelements="24" complexity="0" loc="19" ncloc="19" packages="1" files="1" classes="1"/>
+    <file name="createFeedback.js" path="C:\Users\jan31\Documents\DVOPS_Project1\project1-janelle\public\js\createFeedback.js">
+      <metrics statements="19" coveredstatements="16" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
+      <line num="42" count="4" type="stmt"/>
+      <line num="43" count="4" type="stmt"/>
+      <line num="45" count="4" type="cond" truecount="4" falsecount="0"/>
+      <line num="46" count="1" type="stmt"/>
+      <line num="47" count="1" type="stmt"/>
+      <line num="51" count="3" type="stmt"/>
+      <line num="52" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="53" count="1" type="stmt"/>
+      <line num="54" count="1" type="stmt"/>
+      <line num="57" count="2" type="stmt"/>
+      <line num="59" count="2" type="stmt"/>
+      <line num="60" count="2" type="stmt"/>
+      <line num="66" count="1" type="stmt"/>
+      <line num="68" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="69" count="0" type="stmt"/>
+      <line num="70" count="0" type="stmt"/>
+      <line num="72" count="1" type="stmt"/>
+      <line num="76" count="1" type="stmt"/>
+      <line num="77" count="0" type="stmt"/>
+    </file>
   </project>
 </coverage>
