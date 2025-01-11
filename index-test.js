@@ -36,7 +36,9 @@ app.post('/create-feedback', async (req, res) => {
         await addFeedback(email, feedback, 'utils/feedback.json');
         res.status(201).json({ message: 'Feedback created successfully!' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        // res.status(500).json({ message: error.message });
+        console.error('Error processing feedback:', error); // Log the error for debugging
+        res.status(500).json({ message: 'Failed to submit feedback.' }); // Return a consistent error message
     }
 });
 
