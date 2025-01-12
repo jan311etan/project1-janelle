@@ -79,7 +79,7 @@ describe('Feedback API and Utility Tests', () => {
             expect(res.status).to.equal(409);
             expect(res.body).to.have.property(
                 'message',
-                'Feedback already exists. Redirect to update page.'
+                'Feedback already exists.'
             );
         });
 

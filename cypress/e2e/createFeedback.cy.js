@@ -2,12 +2,27 @@ describe('Create Feedback Functionality', () => {
 
   let baseUrl;
 
+  // before(() => {
+  //   cy.task('startServer').then((url) => {
+  //     baseUrl = url + "/createFeedback.html"; // Store the base URL
+  //     cy.visit(baseUrl);
+  //   });
+  // });
+
   before(() => {
     cy.task('startServer').then((url) => {
       baseUrl = url + "/createFeedback.html"; // Store the base URL
+
+      // Wait for the server to be ready
+      cy.request({
+        url: baseUrl,
+        failOnStatusCode: false // Prevent test failure if the server is not ready
+      }).its('status').should('eq', 200); // Ensure the server is responding
+
       cy.visit(baseUrl);
     });
   });
+
 
   after(() => {
     return cy.task('stopServer'); // Stop the server after the report is done
@@ -50,7 +65,7 @@ describe('Create Feedback Functionality', () => {
     cy.get('#feedback').type('Valid feedback');
     cy.get('button').contains('Submit Feedback').click();
     cy.on('window:alert', (text) => {
-      expect(text).to.equal('Feedback already exists for this email. Redirecting to update page.');
+      expect(text).to.equal('Feedback already exists for this email.');
     });
   });
 

@@ -69,7 +69,7 @@ async function submitFeedback() {
             alert('Feedback submitted successfully!');
             document.getElementById('createFeedbackForm').reset();
         } else {
-            alert('Feedback already exists for this email. Redirecting to update page.');
+            alert('Feedback already exists for this email.');
             // window.location.href = 'updateFeedback.html';
         }
     } catch (error) {

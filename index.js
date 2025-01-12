@@ -30,7 +30,7 @@ app.post('/create-feedback', async (req, res) => {
     try {
         const existingFeedback = await getFeedbackByEmail(email, 'utils/feedback.json');
         if (existingFeedback) {
-            return res.status(409).json({ message: 'Feedback already exists. Redirect to update page.' });
+            return res.status(409).json({ message: 'Feedback already exists.' });
         }
 
         await addFeedback(email, feedback, 'utils/feedback.json');
