@@ -12,5 +12,3 @@ COPY . .
 EXPOSE 5050
 # Define the command to run your app
 CMD [ "node", "index.js" ]
-# Define the command to run your app using PM2
-CMD ["pm2-runtime", "ecosystem.config.js"]
